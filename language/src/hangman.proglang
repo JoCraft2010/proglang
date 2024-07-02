@@ -1,0 +1,149 @@
+// Hangman example
+
+@ext int system(void*);
+@ext int printf(void*, ~);
+@ext char getchar();
+@ext char toupper(char);
+@ext int strlen(void*);
+@ext int rand();
+@ext void srand(int);
+@ext int time(int);
+
+int main() {
+  bool playing = true;
+  bool not_in_word;
+  int wrong_answers = 0;
+  char inp;
+  int wordlen;
+  char current_char;
+  int i;
+  char underscore = 95;
+  int wordid = 0;
+  str word = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
+
+  wordid = time(wordid);
+  srand(wordid);
+
+  wordid = rand();
+  wordid %= 20;
+
+  if (wordid = 0) {
+    word = "PROGRAM";
+  } if (wordid = 1) {
+    word = "FUNCTION";
+  } if (wordid = 2) {
+    word = "VARIABLE";
+  } if (wordid = 3) {
+    word = "COMPILER";
+  } if (wordid = 4) {
+    word = "DEBUGGER";
+  } if (wordid = 5) {
+    word = "PYTHON";
+  } if (wordid = 6) {
+    word = "JAVASCRIPT";
+  } if (wordid = 7) {
+    word = "BOOLEAN";
+  } if (wordid = 8) {
+    word = "INTEGER";
+  } if (wordid = 9) {
+    word = "CONSOLE";
+  } if (wordid = 10) {
+    word = "SOFTWARE";
+  } if (wordid = 11) {
+    word = "HARDWARE";
+  } if (wordid = 12) {
+    word = "ALGORITHM";
+  } if (wordid = 13) {
+    word = "SYNTAX";
+  } if (wordid = 14) {
+    word = "LOOP";
+  } if (wordid = 15) {
+    word = "GITHUB";
+  } if (wordid = 16) {
+    word = "LINUX";
+  } if (wordid = 17) {
+    word = "SHELL";
+  } if (wordid = 18) {
+    word = "JAVA";
+  } if (wordid = 19) {
+    word = "BINARY";
+  }
+
+  str obf_word = "________________";
+  wordlen = strlen(word);
+
+  str wrong_guesses = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
+
+  while (playing) {
+    system("clear");
+    i = 0;
+    playing = false;
+    while (i < wordlen) {
+      current_char = obf_word[i];
+      if (current_char = underscore) {
+        playing = true;
+      }
+      i++;
+    }
+    printf("Welcome to Hangman!\nPlease only enter in exactly ONE letter at a time, otherwise everything will break.\n");
+    if (wrong_answers = 0) {
+      printf("      ╔═════╗\n      ║\n      ║\n      ║\n      ║\n   ═══╬═════════════╗\n  ╱   ║            ╱║\n ╱                ╱ ║\n╔════════════════╗ ╱\n║                ║╱\n╚════════════════╝\n");
+    } if (wrong_answers = 1) {
+      printf("      ╔═════╗\n      ║     O\n      ║\n      ║\n      ║\n   ═══╬═════════════╗\n  ╱   ║            ╱║\n ╱                ╱ ║\n╔════════════════╗ ╱\n║                ║╱\n╚════════════════╝\n");
+    } if (wrong_answers = 2) {
+      printf("      ╔═════╗\n      ║     O\n      ║     |\n      ║\n      ║\n   ═══╬═════════════╗\n  ╱   ║            ╱║\n ╱                ╱ ║\n╔════════════════╗ ╱\n║                ║╱\n╚════════════════╝\n");
+    } if (wrong_answers = 3) {
+      printf("      ╔═════╗\n      ║     O\n      ║    /|\n      ║\n      ║\n   ═══╬═════════════╗\n  ╱   ║            ╱║\n ╱                ╱ ║\n╔════════════════╗ ╱\n║                ║╱\n╚════════════════╝\n");
+    } if (wrong_answers = 4) {
+      printf("      ╔═════╗\n      ║     O\n      ║    /|\\\n      ║\n      ║\n   ═══╬═════════════╗\n  ╱   ║            ╱║\n ╱                ╱ ║\n╔════════════════╗ ╱\n║                ║╱\n╚════════════════╝\n");
+    } if (wrong_answers = 5) {
+      printf("      ╔═════╗\n      ║     O\n      ║    /|\\\n      ║    /\n      ║\n   ═══╬═════════════╗\n  ╱   ║            ╱║\n ╱                ╱ ║\n╔════════════════╗ ╱\n║                ║╱\n╚════════════════╝\n");
+    } if (wrong_answers = 6) {
+      printf("      ╔═════╗\n      ║     O\n      ║    /|\\\n      ║    / \\\n      ║\n   ═══╬═════════════╗\n  ╱   ║            ╱║\n ╱                ╱ ║\n╔════════════════╗ ╱\n║                ║╱\n╚════════════════╝\n");
+    }
+    printf("\nWord:  ");
+    i = 0;
+    while (i < wordlen) {
+      current_char = obf_word[i];
+      printf("%c ", current_char);
+      i++;
+    }
+    printf("\nWrong guesses:  ");
+    i = 0;
+    while (i < wrong_answers) {
+      current_char = wrong_guesses[i];
+      printf("%c ", current_char);
+      i++;
+    }
+    if (wrong_answers = 6) {
+      printf("\n\nYou loose!\nThe word was %s.\nPress enter to exit...", word);
+      getchar();
+      return 0;
+    }
+    if (playing) {
+      printf("\n\nEnter your guess: ");
+      inp = getchar();
+      inp = toupper(inp);
+      not_in_word = true;
+      i = 0;
+      while (i < wordlen) {
+        current_char = word[i];
+        if (current_char = inp) {
+          obf_word[i] = current_char;
+          not_in_word = false;
+        }
+        i++;
+      }
+      if (not_in_word) {
+        wrong_guesses[wrong_answers] = inp;
+        wrong_answers++;
+      }
+      getchar();
+    }
+  }
+
+  printf("\n\nYou win!\nCongratulations!\nPress enter to exit...");
+  getchar();
+
+  return 0;
+}

@@ -1,0 +1,5 @@
+compiler/bin
+language/bin
+language/temp
+tests
+private_notes.txt
