@@ -1,0 +1,8 @@
+// Hello, World!
+
+@ext int printf(void*, ~);
+
+int main() {
+  printf("Hello, World!\n");
+  return 0;
+}
