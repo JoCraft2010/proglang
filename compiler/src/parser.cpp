@@ -344,7 +344,7 @@ proglang::Parser::Parser(std::vector<Token> tokens) {
       current -> appendChild(proglang::ParserElement(current, proglang::ParserElementType::VARIABLE_MODULO, { tokens[i].data.value(), tokens[i + 3].data.value() }));
       i += 4;
     } else if (tokens[i].token_type == proglang::TokenType::IF && tokens[i + 1].token_type == proglang::TokenType::BRACKET_OPEN) {
-      if (tokens[i + 2].token_type != proglang::TokenType::IDENTIFIER || (!tokens[i + 3].isComparingOperator() || tokens[i + 4].token_type != proglang::TokenType::IDENTIFIER) && tokens[i + 3].token_type != proglang::TokenType::BRACKET_CLOSE) {
+      if (tokens[i + 2].token_type != proglang::TokenType::IDENTIFIER || ((!tokens[i + 3].isComparingOperator() || tokens[i + 4].token_type != proglang::TokenType::IDENTIFIER) && tokens[i + 3].token_type != proglang::TokenType::BRACKET_CLOSE)) {
         std::cerr << "Unexpected stuff in if statement in line " << tokens[i + 2].line << "." << std::endl;
         success = false;
       }
@@ -360,7 +360,7 @@ proglang::Parser::Parser(std::vector<Token> tokens) {
         success = false;
       }
     } else if (tokens[i].token_type == proglang::TokenType::WHILE && tokens[i + 1].token_type == proglang::TokenType::BRACKET_OPEN) {
-      if (tokens[i + 2].token_type != proglang::TokenType::IDENTIFIER || (!tokens[i + 3].isComparingOperator() || tokens[i + 4].token_type != proglang::TokenType::IDENTIFIER) && tokens[i + 3].token_type != proglang::TokenType::BRACKET_CLOSE) {
+      if (tokens[i + 2].token_type != proglang::TokenType::IDENTIFIER || ((!tokens[i + 3].isComparingOperator() || tokens[i + 4].token_type != proglang::TokenType::IDENTIFIER) && tokens[i + 3].token_type != proglang::TokenType::BRACKET_CLOSE)) {
         std::cerr << "Unexpected stuff in while statement in line " << tokens[i + 2].line << "." << std::endl;
         success = false;
       }
