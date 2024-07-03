@@ -93,7 +93,6 @@ namespace proglang {
       return name;
     }
     std::string registerEmptyGlobalStringVar(std::string name, std::string size) {
-      // global_vars.push_back(".str." + name);
       str_consts.push_back("@.str." + name + " = dso_local global [" + size + " x i8] zeroinitializer, align 16");
       return "@.str." + name;
     }
