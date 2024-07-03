@@ -61,7 +61,6 @@ namespace proglang {
       }
     }
     std::string registerStringConst(std::string str, int& len) {
-      std::vector<std::string>::iterator loc = std::find(strs.begin(), strs.end(), str);
       std::string name = "@.str." + std::to_string(str_consts.size());
       strs.push_back(str);
       len = str.size() + 1;
