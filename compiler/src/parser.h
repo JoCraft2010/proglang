@@ -93,11 +93,8 @@ namespace proglang {
       return name;
     }
     std::string registerEmptyGlobalStringVar(std::string name, std::string size) {
-      global_vars.push_back(".str." + name);
+      // global_vars.push_back(".str." + name);
       str_consts.push_back("@.str." + name + " = dso_local global [" + size + " x i8] zeroinitializer, align 16");
-      arr_sizes[name] = "[" + size + " x i8]";
-      arr_size_nums[name] = size;
-      std::cout << name << std::endl;
       return "@.str." + name;
     }
     std::string storeVariableValue(std::string name, std::string from, std::string val) {

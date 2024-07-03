@@ -155,7 +155,11 @@ std::string proglang::ParserElement::buildLlvmIr(std::vector<std::string> _data,
     extData.var_sizes[data[3]] = data[1];
   } else if (type == proglang::ParserElementType::VARIABLE_DECLARATION_EMPTY) {
     if (data[3] == "str.") {
-      extData.registerEmptyGlobalStringVar(_data[1] + "." + data[2], data[4]);
+      std::string ap = extData.registerEmptyGlobalStringVar(_data[1] + "." + data[2], data[4]);
+      extData.arr_sizes[data[2]] = "[" + data[4] + " x i8]";
+      extData.arr_size_nums[data[2]] = data[4];
+      extData.var_decls += "%.v." + data[2] + " = alloca " + extData.arr_sizes[data[2]] + ", align 1\n";
+      extData.var_inits += "call void @llvm.memcpy.p0.p0.i32(ptr align 1 %.v." + data[2] + ", ptr align 1 " + ap + ", i32 " + data[4] + ", i1 false)\n";
     } else {
       extData.var_decls += "%.v." + data[2] + " = alloca " + data[0] + ", align " + data[1] + "\n";
     }

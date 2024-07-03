@@ -19,7 +19,7 @@ int main() {
   int i;
   char underscore = 95;
   int wordid = 0;
-  str word = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
+  str word;
 
   wordid = time(wordid);
   srand(wordid);
@@ -72,7 +72,7 @@ int main() {
   str obf_word = "________________";
   wordlen = strlen(word);
 
-  str wrong_guesses = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
+  str wrong_guesses 6;
 
   while (playing) {
     system("clear");
