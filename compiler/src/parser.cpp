@@ -70,7 +70,7 @@ std::string proglang::ParserElement::buildLlvmIr(std::vector<std::string> _data,
   } else if (type == proglang::ParserElementType::EXTERNAL_FUNCTION) {
     extData.ext_defs.push_back("declare " + data[0] + " @" + data[1] + "(");
     std::string func_def = data[0] + " (";
-    for (int i = 2; i < data.size(); i++) {
+    for (long unsigned int i = 2; i < data.size(); i++) {
       extData.ext_defs.back() += data[i];
       func_def += data[i];
       if (data[i] != "...") {
@@ -91,7 +91,7 @@ std::string proglang::ParserElement::buildLlvmIr(std::vector<std::string> _data,
       d += "[temp0]%[temp1] = call " + extData.func_signs[data[0]] + "(";
     }
     std::string temp0;
-    for (int i = 1; i < data.size(); i++) {
+    for (long unsigned int i = 1; i < data.size(); i++) {
       if (data[i].substr(0, 4) == "str.") {
         int s;
         d += "ptr noundef " + extData.registerStringConst(data[i].substr(4, data[i].size() - 1), s);
@@ -116,7 +116,7 @@ std::string proglang::ParserElement::buildLlvmIr(std::vector<std::string> _data,
   } else if (type == proglang::ParserElementType::VARIABLE_ASSIGNMENT_TO_FUNCTION_CALL) {
     d += "[temp0]%[temp1] = call " + extData.func_signs[data[1]] + "(";
     std::string temp0;
-    for (int i = 2; i < data.size(); i++) {
+    for (long unsigned int i = 2; i < data.size(); i++) {
       if (data[i].substr(0, 4) == "str.") {
         int s;
         d += "ptr noundef " + extData.registerStringConst(data[i].substr(4, data[i].size() - 1), s);
@@ -292,7 +292,7 @@ proglang::Parser::Parser(std::vector<Token> tokens) {
   bool success = true;
   proglang::ParserElement* current = &root;
   // TODO 2
-  for (int i = 0; i < tokens.size(); i++) {
+  for (long unsigned int i = 0; i < tokens.size(); i++) {
     if (tokens[i].isType() && tokens[i + 1].token_type == proglang::TokenType::IDENTIFIER && tokens[i + 2].token_type == proglang::TokenType::BRACKET_OPEN) {
       current = &current -> appendChild(proglang::ParserElement(current, proglang::ParserElementType::FUNCTION, { tokens[i].typeToPrimitive(), tokens[i + 1].data.value() }));
       i += 2;
