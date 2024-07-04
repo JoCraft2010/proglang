@@ -1,3 +1,4 @@
+#include "macros.h"
 #include "parser.h"
 #include "tokenizer.h"
 
@@ -8,7 +9,7 @@
 
 int main(int argc, char* argv[]) {
   if (argc < 3) {
-    std::cerr << "Error: insufficient arguments.\nCorrect usage: compiler <infile> <outfile>" << std::endl;
+    ERROR("Error: insufficient arguments.\nCorrect usage: compiler <infile> <outfile>" << std::endl);
     return 1;
   }
 
@@ -21,16 +22,16 @@ int main(int argc, char* argv[]) {
 
   proglang::Parser parser(tokenizer.getCombinedTokens());
 
-  std::cout << "-----" << std::endl;
+  DEBUG("-----" << std::endl);
   std::string llvm_ir = parser.getLlvmIr();
-  std::cout << "-----" << std::endl;
-  std::cout << llvm_ir << std::endl;
+  DEBUG("-----" << std::endl);
+  DEBUG(llvm_ir << std::endl);
 
   std::ofstream ofilestream(ofile);
   ofilestream << llvm_ir;
   ofilestream.close();
 
-  std::cout << "-----" << std::endl;
+  DEBUG("-----" << std::endl);
 
   return 0;
 }

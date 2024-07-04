@@ -6,6 +6,8 @@ CXXFLAGS = -Wall -std=c++17
 LLCFLAGS = -relocation-model=dynamic-no-pic
 CCFLAGS = -no-pie
 
+CXXFLAGS_VERBOSE = -D VERBOSE
+
 COMPILER_SRC_DIR = compiler/src
 COMPILER_SRC = $(wildcard $(COMPILER_SRC_DIR)/*.cpp)
 COMPILER_BIN_DIR = compiler/bin
@@ -32,6 +34,9 @@ fix_missing_dirs:
 
 compiler:
 	$(CXX) $(CXXFLAGS) $(COMPILER_SRC) -o $(COMPILER_BIN)
+
+compiler_verbose:
+	$(CXX) $(CXXFLAGS) $(CXXFLAGS_VERBOSE) $(COMPILER_SRC) -o $(COMPILER_BIN)
 
 build_proglang:
 	$(COMPILER_BIN) $(LANGUAGE_SRC) $(LANGUAGE_LL)

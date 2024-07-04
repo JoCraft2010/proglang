@@ -1,5 +1,6 @@
 #pragma once
 
+#include "macros.h"
 #include "tokenizer.h"
 
 #include <algorithm>

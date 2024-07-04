@@ -10,46 +10,46 @@ proglang::ParserElement::~ParserElement() { }
 
 void proglang::ParserElement::printTree(std::string off) {
   if (type == ParserElementType::ROOT) {
-    std::cout << off << "ROOT (";
+    DEBUG(off << "ROOT (");
   } else if (type == ParserElementType::FUNCTION) {
-    std::cout << off << "FUNCTION (";
+    DEBUG(off << "FUNCTION (");
   } else if (type == ParserElementType::EXTERNAL_FUNCTION) {
-    std::cout << off << "EXTERNAL_FUNCTION (";
+    DEBUG(off << "EXTERNAL_FUNCTION (");
   } else if (type == ParserElementType::FUNCTION_CALL) {
-    std::cout << off << "FUNCTION_CALL (";
+    DEBUG(off << "FUNCTION_CALL (");
   } else if (type == ParserElementType::VARIABLE_DECLARATION) {
-    std::cout << off << "VARIABLE_DECLARATION (";
+    DEBUG(off << "VARIABLE_DECLARATION (");
   } else if (type == ParserElementType::VARIABLE_DECLARATION_EMPTY) {
-    std::cout << off << "VARIABLE_DECLARATION_EMPTY (";
+    DEBUG(off << "VARIABLE_DECLARATION_EMPTY (");
   } else if (type == ParserElementType::VARIABLE_ASSIGNMENT) {
-    std::cout << off << "VARIABLE_ASSIGNMENT (";
+    DEBUG(off << "VARIABLE_ASSIGNMENT (");
   } else if (type == ParserElementType::VARIABLE_ASSIGNMENT_TO_FUNCTION_CALL) {
-    std::cout << off << "VARIABLE_ASSIGNMENT_TO_FUNCTION_CALL (";
+    DEBUG(off << "VARIABLE_ASSIGNMENT_TO_FUNCTION_CALL (");
   } else if (type == ParserElementType::VARIABLE_ASSIGNMENT_TO_INDEX) {
-    std::cout << off << "VARIABLE_ASSIGNMENT_TO_INDEX (";
+    DEBUG(off << "VARIABLE_ASSIGNMENT_TO_INDEX (");
   } else if (type == ParserElementType::VARIABLE_INDEX_ASSIGNMENT) {
-    std::cout << off << "VARIABLE_INDEX_ASSIGNMENT (";
+    DEBUG(off << "VARIABLE_INDEX_ASSIGNMENT (");
   } else if (type == ParserElementType::VARIABLE_INCREMENT) {
-    std::cout << off << "VARIABLE_INCREMENT (";
+    DEBUG(off << "VARIABLE_INCREMENT (");
   } else if (type == ParserElementType::VARIABLE_DECREMENT) {
-    std::cout << off << "VARIABLE_DECREMENT (";
+    DEBUG(off << "VARIABLE_DECREMENT (");
   } else if (type == ParserElementType::IF) {
-    std::cout << off << "IF (";
+    DEBUG(off << "IF (");
   } else if (type == ParserElementType::IF_SINGLE_BOOL) {
-    std::cout << off << "IF_SINGLE_BOOL (";
+    DEBUG(off << "IF_SINGLE_BOOL (");
   } else if (type == ParserElementType::WHILE) {
-    std::cout << off << "WHILE (";
+    DEBUG(off << "WHILE (");
   } else if (type == ParserElementType::WHILE_SINGLE_BOOL) {
-    std::cout << off << "WHILE_SINGLE_BOOL (";
+    DEBUG(off << "WHILE_SINGLE_BOOL (");
   } else if (type == ParserElementType::RETURN) {
-    std::cout << off << "RETURN (";
+    DEBUG(off << "RETURN (");
   } else {
-    std::cout << off << "<UNKNOWN> (";
+    DEBUG(off << "<UNKNOWN> (");
   }
   for (std::string s : data) {
-    std::cout << s << " ";
+    DEBUG(s << " ");
   }
-  std::cout << ")" << std::endl;
+  DEBUG(")" << std::endl);
   for (proglang::ParserElement e : children) {
     e.printTree(off + "  ");
   }
@@ -100,7 +100,7 @@ std::string proglang::ParserElement::buildLlvmIr(std::vector<std::string> _data,
         temp0 += extData.obtainVariableAccess(data[i].substr(4, data[i].size() - 1), _data[1], ap);
         d += extData.var_types[data[i].substr(4, data[i].size() - 1)] + " " + ap;
       } else {
-        std::cerr << "This is actually a compiler bug." << std::endl;
+        ERROR("This is actually a compiler bug." << std::endl);
         exit(1);
       }
       if (i < data.size() - 1) {
@@ -125,7 +125,7 @@ std::string proglang::ParserElement::buildLlvmIr(std::vector<std::string> _data,
         temp0 += extData.obtainVariableAccess(data[i].substr(4, data[i].size() - 1), _data[1], ap);
         d += extData.var_types[data[i].substr(4, data[i].size() - 1)] + " " + ap;
       } else {
-        std::cerr << "This is actually a compiler bug." << std::endl;
+        ERROR("This is actually a compiler bug." << std::endl);
         exit(1);
       }
       if (i < data.size() - 1) {
@@ -290,9 +290,9 @@ proglang::ParserElement* proglang::ParserElement::getParent() {
 
 proglang::Parser::Parser(std::vector<Token> tokens) {
   for (Token t : tokens) {
-    std::cout << t.toString() << std::endl;
+    DEBUG(t.toString() << std::endl);
   }
-  std::cout << "-----" << std::endl;
+  DEBUG("-----" << std::endl);
   bool success = true;
   proglang::ParserElement* current = &root;
   // TODO 2
@@ -301,12 +301,12 @@ proglang::Parser::Parser(std::vector<Token> tokens) {
       current = &current -> appendChild(proglang::ParserElement(current, proglang::ParserElementType::FUNCTION, { tokens[i].typeToPrimitive(), tokens[i + 1].data.value() }));
       i += 2;
       if (tokens[i + 1].token_type != proglang::TokenType::BRACKET_CLOSE) {
-        std::cerr << "Expected BRACKET_CLOSE in function definition in line " << tokens[i].line << ", got \"" << tokens[i + 1].toString() << "\" instead." << std::endl;
+        ERROR("Expected BRACKET_CLOSE in function definition in line " << tokens[i].line << ", got \"" << tokens[i + 1].toString() << "\" instead." << std::endl);
         success = false;
       }
       i++;
       if (tokens[i + 1].token_type != proglang::TokenType::CURLY_BRACKET_OPEN) {
-        std::cerr << "Expected CURLY_BRACKET_OPEN in function definition in line " << tokens[i].line << ", got \"" << tokens[i + 1].toString() << "\" instead." << std::endl;
+        ERROR("Expected CURLY_BRACKET_OPEN in function definition in line " << tokens[i].line << ", got \"" << tokens[i + 1].toString() << "\" instead." << std::endl);
         success = false;
       }
       i++;
@@ -349,7 +349,7 @@ proglang::Parser::Parser(std::vector<Token> tokens) {
       i += 4;
     } else if (tokens[i].token_type == proglang::TokenType::IF && tokens[i + 1].token_type == proglang::TokenType::BRACKET_OPEN) {
       if (tokens[i + 2].token_type != proglang::TokenType::IDENTIFIER || ((!tokens[i + 3].isComparingOperator() || tokens[i + 4].token_type != proglang::TokenType::IDENTIFIER) && tokens[i + 3].token_type != proglang::TokenType::BRACKET_CLOSE)) {
-        std::cerr << "Unexpected stuff in if statement in line " << tokens[i + 2].line << "." << std::endl;
+        ERROR("Unexpected stuff in if statement in line " << tokens[i + 2].line << "." << std::endl);
         success = false;
       }
       if (tokens[i + 3].token_type == proglang::TokenType::BRACKET_CLOSE) {
@@ -360,12 +360,12 @@ proglang::Parser::Parser(std::vector<Token> tokens) {
         current = &current -> appendChild(proglang::ParserElement(current, proglang::ParserElementType::IF, { tokens[i - 4].data.value(), tokens[i - 2].data.value(), tokens[i - 3].comparingOperatorToPrimitive() }));
       }
       if (tokens[i].token_type != proglang::TokenType::CURLY_BRACKET_OPEN) {
-        std::cerr << "Unexpected \"" << tokens[i].toString() << "\" in if statement in line " << tokens[i - 1].line << ". Expected CURLY_BRACKET_OPEN instead." << std::endl;
+        ERROR("Unexpected \"" << tokens[i].toString() << "\" in if statement in line " << tokens[i - 1].line << ". Expected CURLY_BRACKET_OPEN instead." << std::endl);
         success = false;
       }
     } else if (tokens[i].token_type == proglang::TokenType::WHILE && tokens[i + 1].token_type == proglang::TokenType::BRACKET_OPEN) {
       if (tokens[i + 2].token_type != proglang::TokenType::IDENTIFIER || ((!tokens[i + 3].isComparingOperator() || tokens[i + 4].token_type != proglang::TokenType::IDENTIFIER) && tokens[i + 3].token_type != proglang::TokenType::BRACKET_CLOSE)) {
-        std::cerr << "Unexpected stuff in while statement in line " << tokens[i + 2].line << "." << std::endl;
+        ERROR("Unexpected stuff in while statement in line " << tokens[i + 2].line << "." << std::endl);
         success = false;
       }
       if (tokens[i + 3].token_type == proglang::TokenType::BRACKET_CLOSE) {
@@ -376,7 +376,7 @@ proglang::Parser::Parser(std::vector<Token> tokens) {
         current = &current -> appendChild(proglang::ParserElement(current, proglang::ParserElementType::WHILE, { tokens[i - 4].data.value(), tokens[i - 2].data.value(), tokens[i - 3].comparingOperatorToPrimitive() }));
       }
       if (tokens[i].token_type != proglang::TokenType::CURLY_BRACKET_OPEN) {
-        std::cerr << "Unexpected \"" << tokens[i].toString() << "\" in if statement in line " << tokens[i - 1].line << ". Expected CURLY_BRACKET_OPEN instead." << std::endl;
+        ERROR("Unexpected \"" << tokens[i].toString() << "\" in if statement in line " << tokens[i - 1].line << ". Expected CURLY_BRACKET_OPEN instead." << std::endl);
         success = false;
       }
     } else if (tokens[i].token_type == proglang::TokenType::EXTERNAL_DEFINITION && tokens[i + 1].isType() && tokens[i + 2].token_type == proglang::TokenType::IDENTIFIER && tokens[i + 3].token_type == proglang::TokenType::BRACKET_OPEN) {
@@ -393,14 +393,14 @@ proglang::Parser::Parser(std::vector<Token> tokens) {
         } else if(tokens[i].token_type == proglang::TokenType::BRACKET_CLOSE) {
           continue;
         } else {
-          std::cerr << "Unexpected \"" << tokens[i].toString() << "\" in external function definition in line " << tokens[i].line << "." << std::endl;
+          ERROR("Unexpected \"" << tokens[i].toString() << "\" in external function definition in line " << tokens[i].line << "." << std::endl);
           success = false;
         }
         i++;
       }
       i++;
       if (tokens[i].token_type != proglang::TokenType::SEMICOLON) {
-        std::cerr << "Expected SEMICOLON after external function definition in line " << tokens[i - 1].line << ", got " << tokens[i].toString() << " instead." << std::endl;
+        ERROR("Expected SEMICOLON after external function definition in line " << tokens[i - 1].line << ", got " << tokens[i].toString() << " instead." << std::endl);
         success = false;
       }
       current -> appendChild(proglang::ParserElement(current, proglang::ParserElementType::EXTERNAL_FUNCTION, data));
@@ -419,13 +419,13 @@ proglang::Parser::Parser(std::vector<Token> tokens) {
           i++;
           break;
         } else {
-          std::cerr << "Unexpected \"" << tokens[i].toString() << "\" in function call in line " << tokens[i].line << "." << std::endl;
+          ERROR("Unexpected \"" << tokens[i].toString() << "\" in function call in line " << tokens[i].line << "." << std::endl);
           success = false;
         }
         i += 2;
       }
       if (tokens[i].token_type != proglang::TokenType::SEMICOLON) {
-        std::cerr << "Missing SEMICOLON after function call in line " << tokens[i].line << std::endl;
+        ERROR("Missing SEMICOLON after function call in line " << tokens[i].line << std::endl);
         success = false;
       } else {
         current -> appendChild(proglang::ParserElement(current, proglang::ParserElementType::FUNCTION_CALL, funcdata));
@@ -442,13 +442,13 @@ proglang::Parser::Parser(std::vector<Token> tokens) {
           i++;
           break;
         } else {
-          std::cerr << "Unexpected \"" << tokens[i].toString() << "\" in function call in line " << tokens[i].line << "." << std::endl;
+          ERROR("Unexpected \"" << tokens[i].toString() << "\" in function call in line " << tokens[i].line << "." << std::endl);
           success = false;
         }
         i += 2;
       }
       if (tokens[i].token_type != proglang::TokenType::SEMICOLON) {
-        std::cerr << "Missing SEMICOLON after function call in line " << tokens[i].line << std::endl;
+        ERROR("Missing SEMICOLON after function call in line " << tokens[i].line << std::endl);
         success = false;
       } else {
         current -> appendChild(proglang::ParserElement(current, proglang::ParserElementType::VARIABLE_ASSIGNMENT_TO_FUNCTION_CALL, funcdata));
@@ -456,11 +456,11 @@ proglang::Parser::Parser(std::vector<Token> tokens) {
     } else if (tokens[i].token_type == proglang::TokenType::CURLY_BRACKET_CLOSE) {
       current = current -> getParent();
     } else {
-      std::cerr << "Unexpected \"" << tokens[i].toString() << "\" in line " << tokens[i].line << "." << std::endl;
+      ERROR("Unexpected \"" << tokens[i].toString() << "\" in line " << tokens[i].line << "." << std::endl);
       success = false;
     }
   }
-  std::cout << "-----" << std::endl;
+  DEBUG("-----" << std::endl);
   root.printTree("| ");
   if (!success) {
     exit(1);

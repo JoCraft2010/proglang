@@ -1,5 +1,7 @@
 #pragma once
 
+#include "macros.h"
+
 #include <fstream>
 #include <iostream>
 #include <optional>
@@ -119,7 +121,7 @@ namespace proglang {
       } else if (token_type == TokenType::STR_T || token_type == TokenType::VOID_PTR) {
         return "ptr";
       } else {
-        std::cerr << "\"" << toString() << "\" is not a primitive type." << std::endl;
+        ERROR("\"" << toString() << "\" is not a primitive type." << std::endl);
         return "err";
       }
     }
@@ -131,7 +133,7 @@ namespace proglang {
       } else if (token_type == TokenType::STR_T) {
         return "str.";
       } else {
-        std::cerr << "\"" << toString() << "\" is not a primitive type avialable for inline expressions." << std::endl;
+        ERROR("\"" << toString() << "\" is not a primitive type avialable for inline expressions." << std::endl);
         return "err.";
       }
     }
@@ -145,7 +147,7 @@ namespace proglang {
       } else if (token_type == TokenType::STR_T) {
         return 8;
       } else {
-        std::cerr << "\"" << toString() << "\" is not a primitive type to which a definite size can be assigned." << std::endl;
+        ERROR("\"" << toString() << "\" is not a primitive type to which a definite size can be assigned." << std::endl);
         return 0;
       }
     }
@@ -160,7 +162,7 @@ namespace proglang {
       } else if (token_type == TokenType::EQUAL) {
         return "eq";
       } else {
-        std::cerr << "\"" << toString() << "\" is not a primitive comparing operator." << std::endl;
+        ERROR("\"" << toString() << "\" is not a primitive comparing operator." << std::endl);
         return "err";
       }
     }
