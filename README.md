@@ -15,14 +15,12 @@ To use ProgLang on your Computer you install the Dependencies.
 
 #### Arch Linux
 ```sh
-sudo pacman -Syu gcc wget
-sh -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+sudo pacman -Syu gcc wget llvm
 ```
 
 #### Debian and Ubuntu-based systems
 ```sh
-sudo apt-get install build-essential wget
-sh -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+sudo apt install build-essential wget llvm
 ```
 
 ### Installing git for easy cloning of the repository (optional)
@@ -34,7 +32,7 @@ sudo pacman -Syu git
 
 #### Debian and Ubuntu-based systems
 ```sh
-sudo apt-get install git
+sudo apt install git
 ```
 
 ### Cloning the git repository
