@@ -40,7 +40,7 @@ namespace proglang {
     std::unordered_map<std::string, std::string> func_signs;
     std::string universal_attrs = " \"frame-pointer\"=\"all\" \"min-legal-vector-width\"=\"0\" \"no-trapping-math\"=\"true\" \"stack-protector-buffer-size\"=\"8\" \"tune-cpu\"=\"generic\"";
     std::vector<std::string> attrs = { "attributes #0 = { nocallback nofree nounwind willreturn }" };
-    std::vector<std::string> registered_attrs = { "nocallback nofree nounwind willreturn memory(argmem: readwrite)" };
+    std::vector<std::string> registered_attrs = { "nocallback nofree nounwind willreturn" };
     std::vector<std::string> global_vars;
     std::string var_decls;
     std::string var_inits;
