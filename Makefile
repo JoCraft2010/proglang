@@ -2,30 +2,30 @@ CXX := g++
 LLC := llc
 CC := gcc
 
-CXXFLAGS = -Wall -std=c++17
-LLCFLAGS = -relocation-model=dynamic-no-pic
-CCFLAGS = -no-pie
+CXXFLAGS := -Wall -std=c++17
+LLCFLAGS := -relocation-model=dynamic-no-pic
+CCFLAGS := -no-pie
 
-CXXFLAGS_VERBOSE = -D VERBOSE
+CXXFLAGS_VERBOSE := -D VERBOSE
 
-COMPILER_SRC_DIR = compiler/src
-COMPILER_SRC = $(wildcard $(COMPILER_SRC_DIR)/*.cpp)
-COMPILER_BIN_DIR = compiler/bin
-COMPILER_BIN = $(COMPILER_BIN_DIR)/compiler
+COMPILER_SRC_DIR := compiler/src
+COMPILER_SRC := $(wildcard $(COMPILER_SRC_DIR)/*.cpp)
+COMPILER_BIN_DIR := compiler/bin
+COMPILER_BIN := $(COMPILER_BIN_DIR)/compiler
 
-LANGUAGE_SRC_DIR = language/src
-LANGUAGE_SRC = $(LANGUAGE_SRC_DIR)/main.proglang
-LANGUAGE_TEMP_DIR = language/temp
-LANGUAGE_LL = $(LANGUAGE_TEMP_DIR)/main.ll
-LANGUAGE_ASM = $(LANGUAGE_TEMP_DIR)/main.s
-LANGUAGE_BIN_DIR = language/bin
-LANGUAGE_BIN = $(LANGUAGE_BIN_DIR)/main
+LANGUAGE_SRC_DIR := language/src
+LANGUAGE_SRC := $(LANGUAGE_SRC_DIR)/main.proglang
+LANGUAGE_TEMP_DIR := language/temp
+LANGUAGE_LL := $(LANGUAGE_TEMP_DIR)/main.ll
+LANGUAGE_ASM := $(LANGUAGE_TEMP_DIR)/main.s
+LANGUAGE_BIN_DIR := language/bin
+LANGUAGE_BIN := $(LANGUAGE_BIN_DIR)/main
 
-HANGMAN_SRC = $(LANGUAGE_SRC_DIR)/hangman.proglang
+HANGMAN_SRC := $(LANGUAGE_SRC_DIR)/hangman.proglang
 
-MKDIR_P = mkdir -p
+MKDIR_P := mkdir -p
 
-REMOVE_TEMP_FILES = rm -r $(LANGUAGE_TEMP_DIR)
+REMOVE_TEMP_FILES := rm -r $(LANGUAGE_TEMP_DIR)
 
 all: fix_missing_dirs compiler build_proglang run_result
 
