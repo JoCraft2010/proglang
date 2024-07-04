@@ -39,7 +39,7 @@ namespace proglang {
     std::vector<std::string> ext_defs = { "declare void @llvm.memcpy.p0.p0.i32(ptr noalias nocapture writeonly, ptr noalias nocapture readonly, i32, i1 immarg) #0" };
     std::unordered_map<std::string, std::string> func_signs;
     std::string universal_attrs = " \"frame-pointer\"=\"all\" \"min-legal-vector-width\"=\"0\" \"no-trapping-math\"=\"true\" \"stack-protector-buffer-size\"=\"8\" \"tune-cpu\"=\"generic\"";
-    std::vector<std::string> attrs = { "attributes #0 = { nocallback nofree nounwind willreturn memory(argmem: readwrite) }" };
+    std::vector<std::string> attrs = { "attributes #0 = { nocallback nofree nounwind willreturn }" };
     std::vector<std::string> registered_attrs = { "nocallback nofree nounwind willreturn memory(argmem: readwrite)" };
     std::vector<std::string> global_vars;
     std::string var_decls;
