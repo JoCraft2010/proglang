@@ -53,4 +53,4 @@ build_hangman:
 run_result:
 	$(LANGUAGE_BIN)
 
-.PHONY: all fix_missing_dirs compiler build_proglang run_result
+.PHONY: all fix_missing_dirs compiler compiler_verbose build_proglang build_hangman run_result
