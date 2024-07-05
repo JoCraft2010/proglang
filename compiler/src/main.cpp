@@ -16,6 +16,8 @@ int main(int argc, char* argv[]) {
   std::string ifile = argv[1];
   std::string ofile = argv[2];
 
+  INFO("Compiling file " << ifile << " to " << ofile << std::endl);
+
   std::ifstream ifilestream(ifile);
   proglang::Tokenizer tokenizer(ifilestream);
   ifilestream.close();
