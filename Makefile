@@ -27,24 +27,24 @@ MKDIR_P := mkdir -p
 
 REMOVE_TEMP_FILES := rm -r $(LANGUAGE_TEMP_DIR)
 
-all: fix_missing_dirs compiler build_proglang run_result
-
-fix_missing_dirs:
-	$(MKDIR_P) $(COMPILER_BIN_DIR) $(LANGUAGE_TEMP_DIR) $(LANGUAGE_BIN_DIR)
+all: compiler build_proglang run_result
 
 compiler_verbose: CXXFLAGS += $(CXXFLAGS_VERBOSE)
 compiler_verbose: compiler
 
 compiler:
+	$(MKDIR_P) $(COMPILER_BIN_DIR)
 	$(CXX) $(CXXFLAGS) $(COMPILER_SRC) -o $(COMPILER_BIN)
 
 build_proglang:
+	$(MKDIR_P) $(LANGUAGE_TEMP_DIR) $(LANGUAGE_BIN_DIR)
 	$(COMPILER_BIN) $(LANGUAGE_SRC) $(LANGUAGE_LL)
 	$(LLC) $(LLCFLAGS) $(LANGUAGE_LL)
 	$(CC) $(CCFLAGS) $(LANGUAGE_ASM) -o $(LANGUAGE_BIN)
 	$(REMOVE_TEMP_FILES)
 
 build_hangman:
+	$(MKDIR_P) $(LANGUAGE_TEMP_DIR) $(LANGUAGE_BIN_DIR)
 	$(COMPILER_BIN) $(HANGMAN_SRC) $(LANGUAGE_LL)
 	$(LLC) $(LLCFLAGS) $(LANGUAGE_LL)
 	$(CC) $(CCFLAGS) $(LANGUAGE_ASM) -o $(LANGUAGE_BIN)
@@ -53,4 +53,4 @@ build_hangman:
 run_result:
 	$(LANGUAGE_BIN)
 
-.PHONY: all fix_missing_dirs compiler_verbose compiler build_proglang build_hangman run_result
+.PHONY: all compiler_verbose compiler build_proglang build_hangman run_result

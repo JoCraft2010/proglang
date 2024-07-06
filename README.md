@@ -48,11 +48,11 @@ After entering the directory you can use **make** to compile the compiler and th
 # Compile everything:
 make
 # Compile only the compiler (binary will be located in compiler/bin by default):
-make fix_missing_dirs compiler
+make compiler
 # Only run the compiler (compiling language/src/main.proglang by default and putting the binary in language/bin)
-make fix_missing_dirs build_proglang
+make build_proglang
 # Only build the Hangman example:
-make fix_missing_dirs build_hangman
+make build_hangman
 # Or only run the result located in language/bin/main:
 make run_result
 ```
