@@ -2,9 +2,9 @@ CXX := g++
 LLC := llc
 CC := gcc
 
-CXXFLAGS ?= -Wall -std=c++17
+CXXFLAGS ?= -Wall -std=c++17 -pipe -march=native
 LLCFLAGS := -relocation-model=dynamic-no-pic
-CCFLAGS := -no-pie
+CCFLAGS := -no-pie -pipe
 
 CXXFLAGS_VERBOSE := -D VERBOSE
 
