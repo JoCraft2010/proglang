@@ -2,7 +2,7 @@ CXX := g++
 LLC := llc
 CC := gcc
 
-CXXFLAGS := -Wall -std=c++17
+CXXFLAGS ?= -Wall -std=c++17
 LLCFLAGS := -relocation-model=dynamic-no-pic
 CCFLAGS := -no-pie
 
@@ -32,11 +32,11 @@ all: fix_missing_dirs compiler build_proglang run_result
 fix_missing_dirs:
 	$(MKDIR_P) $(COMPILER_BIN_DIR) $(LANGUAGE_TEMP_DIR) $(LANGUAGE_BIN_DIR)
 
+compiler_verbose: CXXFLAGS += $(CXXFLAGS_VERBOSE)
+compiler_verbose: compiler
+
 compiler:
 	$(CXX) $(CXXFLAGS) $(COMPILER_SRC) -o $(COMPILER_BIN)
-
-compiler_verbose:
-	$(CXX) $(CXXFLAGS) $(CXXFLAGS_VERBOSE) $(COMPILER_SRC) -o $(COMPILER_BIN)
 
 build_proglang:
 	$(COMPILER_BIN) $(LANGUAGE_SRC) $(LANGUAGE_LL)
@@ -53,4 +53,4 @@ build_hangman:
 run_result:
 	$(LANGUAGE_BIN)
 
-.PHONY: all fix_missing_dirs compiler compiler_verbose build_proglang build_hangman run_result
+.PHONY: all fix_missing_dirs compiler_verbose compiler build_proglang build_hangman run_result
