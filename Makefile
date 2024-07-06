@@ -3,10 +3,14 @@ LLC := llc
 CC := gcc
 
 CXXFLAGS ?= -Wall -std=c++17 -pipe -march=native
-LLCFLAGS := -relocation-model=dynamic-no-pic
+LLCFLAGS ?= -relocation-model=dynamic-no-pic
 CCFLAGS := -no-pie -pipe
 
 CXXFLAGS_VERBOSE := -D VERBOSE
+
+ifneq ($(shell cat /etc/os-release | grep -q "ID=arch" && echo "arch" || echo "other"), arch)
+    LLCFLAGS += -opaque-pointers
+endif
 
 COMPILER_SRC_DIR := compiler/src
 COMPILER_SRC := $(wildcard $(COMPILER_SRC_DIR)/*.cpp)
