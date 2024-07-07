@@ -2,6 +2,7 @@
 
 #include "macros.h"
 
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <optional>
@@ -177,13 +178,14 @@ namespace proglang {
 
   class Tokenizer {
   public:
-    Tokenizer(std::ifstream&);
+    Tokenizer(std::ifstream&, std::filesystem::path);
     ~Tokenizer();
 
     std::vector<Token> getCombinedTokens();
   private:
     Token bufToToken(std::string&, int);
 
+    std::filesystem::path path;
     std::vector<proglang::Token> tokens;
   };
 

@@ -2,6 +2,7 @@
 #include "parser.h"
 #include "tokenizer.h"
 
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -18,8 +19,9 @@ int main(int argc, char* argv[]) {
 
   INFO("Compiling file " << ifile << " to " << ofile << std::endl);
 
-  std::ifstream ifilestream(ifile);
-  proglang::Tokenizer tokenizer(ifilestream);
+  std::filesystem::path ifilep(ifile);
+  std::ifstream ifilestream(ifilep);
+  proglang::Tokenizer tokenizer(ifilestream, ifilep);
   ifilestream.close();
 
   proglang::Parser parser(tokenizer.getCombinedTokens());

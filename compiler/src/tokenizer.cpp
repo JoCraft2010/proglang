@@ -1,6 +1,7 @@
 #include "tokenizer.h"
 
-proglang::Tokenizer::Tokenizer(std::ifstream& stream) {
+proglang::Tokenizer::Tokenizer(std::ifstream& stream, std::filesystem::path _path) {
+  path = _path;
   char c;
   std::string buf = "";
   int cline;
@@ -115,5 +116,23 @@ proglang::Token proglang::Tokenizer::bufToToken(std::string& buf, int l) {
 }
 
 std::vector<proglang::Token> proglang::Tokenizer::getCombinedTokens() {
-  return tokens;
+  std::vector<proglang::Token> t;
+  for (long unsigned int i = 0; i < tokens.size(); i++) {
+    if (tokens[i].token_type == proglang::TokenType::EXTERNAL_DEFINITION && tokens[i + 1].token_type == proglang::TokenType::IDENTIFIER && tokens[i + 2].token_type == proglang::TokenType::SEMICOLON) {
+      std::filesystem::path np = path.parent_path();
+      np.append(tokens[i + 1].data.value() + ".proglang");
+      std::ifstream ifilestream(np);
+      if (!ifilestream) {
+        ERROR("File " << np.string() << " does not exist." << std::endl);
+        exit(1);
+      }
+      Tokenizer tok(ifilestream, path);
+      ifilestream.close();
+      std::vector<proglang::Token> nt = tok.getCombinedTokens();
+      t.insert(t.end(), nt.begin(), nt.end());
+      i += 3;
+    }
+    t.push_back(tokens[i]);
+  }
+  return t;
 };
