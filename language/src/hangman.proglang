@@ -1,12 +1,10 @@
 // Hangman example
 
 @ext stdio;
+@ext stdlib;
 
-@ext int system(void*);
 @ext char toupper(char);
 @ext int strlen(void*);
-@ext int rand();
-@ext void srand(int);
 @ext int time(int);
 
 int main() {
