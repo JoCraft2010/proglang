@@ -3,8 +3,8 @@
 @ext ctype;
 @ext stdio;
 @ext stdlib;
+@ext string;
 
-@ext int strlen(void*);
 @ext int time(int);
 
 int main() {
