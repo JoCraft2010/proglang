@@ -145,7 +145,7 @@ namespace proglang {
     int primitiveSize() {
       if (token_type == TokenType::I1_T) {
         return 1;
-      } if (token_type == TokenType::I8_T) {
+      } else if (token_type == TokenType::I8_T) {
         return 1;
       } else if (token_type == TokenType::I16_T) {
         return 2;
