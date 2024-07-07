@@ -99,6 +99,8 @@ proglang::Token proglang::Tokenizer::bufToToken(std::string& buf, int l) {
     return { token_type: TokenType::I1_T, line: l };
   } else if (buf == "char") {
     return { token_type: TokenType::I8_T, line: l };
+  } else if (buf == "short") {
+    return { token_type: TokenType::I16_T, line: l };
   } else if (buf == "int") {
     return { token_type: TokenType::I32_T, line: l };
   } else if (buf == "str") {

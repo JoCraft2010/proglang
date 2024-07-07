@@ -32,6 +32,7 @@ namespace proglang {
     VOID_T,
     I1_T,
     I8_T,
+    I16_T,
     I32_T,
     STR_T,
     VOID_PTR,
@@ -87,6 +88,8 @@ namespace proglang {
         return "I1_T";
       } else if (token_type == TokenType::I8_T) {
         return "I8_T";
+      }else if (token_type == TokenType::I16_T) {
+        return "I16_T";
       } else if (token_type == TokenType::I32_T) {
         return "I32_T";
       } else if (token_type == TokenType::STR_T) {
@@ -107,7 +110,7 @@ namespace proglang {
       return "<UNKNOWN>";
     }
     bool isType() {
-      return token_type == TokenType::VOID_T || token_type == TokenType::I1_T || token_type == TokenType::I8_T || token_type == TokenType::I32_T || token_type == TokenType::STR_T || token_type == TokenType::VOID_PTR;
+      return token_type == TokenType::VOID_T || token_type == TokenType::I1_T || token_type == TokenType::I8_T || token_type == TokenType::I16_T || token_type == TokenType::I32_T || token_type == TokenType::STR_T || token_type == TokenType::VOID_PTR;
     }
     std::string typeToPrimitive() {
       if (token_type == TokenType::VOID_T) {
@@ -116,6 +119,8 @@ namespace proglang {
         return "i1";
       } else if (token_type == TokenType::I8_T) {
         return "i8";
+      } else if (token_type == TokenType::I16_T) {
+        return "i16";
       } else if (token_type == TokenType::I32_T) {
         return "i32";
       } else if (token_type == TokenType::STR_T || token_type == TokenType::VOID_PTR) {
@@ -128,7 +133,7 @@ namespace proglang {
     std::string typeToValidator() {
       if (token_type == TokenType::I1_T) {
         return "bool";
-      } else if (token_type == TokenType::I8_T || token_type == TokenType::I32_T) {
+      } else if (token_type == TokenType::I8_T || token_type == TokenType::I16_T || token_type == TokenType::I32_T) {
         return "int.";
       } else if (token_type == TokenType::STR_T) {
         return "str.";
@@ -142,6 +147,8 @@ namespace proglang {
         return 1;
       } if (token_type == TokenType::I8_T) {
         return 1;
+      } else if (token_type == TokenType::I16_T) {
+        return 2;
       } else if (token_type == TokenType::I32_T) {
         return 4;
       } else if (token_type == TokenType::STR_T) {
