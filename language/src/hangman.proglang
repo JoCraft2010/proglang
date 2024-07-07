@@ -75,7 +75,7 @@ int main() {
   str wrong_guesses 6;
 
   while (playing) {
-    // system("clear");
+    system("clear");
     i = 0;
     playing = false;
     while (i < wordlen) {
