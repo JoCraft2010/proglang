@@ -1,8 +1,8 @@
 // Hangman example
 
+@ext stdio;
+
 @ext int system(void*);
-@ext int printf(void*, ~);
-@ext char getchar();
 @ext char toupper(char);
 @ext int strlen(void*);
 @ext int rand();
@@ -75,7 +75,7 @@ int main() {
   str wrong_guesses 6;
 
   while (playing) {
-    system("clear");
+    // system("clear");
     i = 0;
     playing = false;
     while (i < wordlen) {

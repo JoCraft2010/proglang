@@ -1,0 +1,2 @@
+@ext char getchar();
+@ext int printf(void*, ~);
