@@ -130,7 +130,8 @@ std::vector<proglang::Token> proglang::Tokenizer::getCombinedTokens() {
       ifilestream.close();
       std::vector<proglang::Token> nt = tok.getCombinedTokens();
       t.insert(t.end(), nt.begin(), nt.end());
-      i += 3;
+      i += 2;
+      continue;
     }
     t.push_back(tokens[i]);
   }
