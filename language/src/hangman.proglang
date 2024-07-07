@@ -1,9 +1,9 @@
 // Hangman example
 
+@ext ctype;
 @ext stdio;
 @ext stdlib;
 
-@ext char toupper(char);
 @ext int strlen(void*);
 @ext int time(int);
 
