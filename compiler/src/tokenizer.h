@@ -89,7 +89,7 @@ namespace proglang {
         return "I1_T";
       } else if (token_type == TokenType::I8_T) {
         return "I8_T";
-      }else if (token_type == TokenType::I16_T) {
+      } else if (token_type == TokenType::I16_T) {
         return "I16_T";
       } else if (token_type == TokenType::I32_T) {
         return "I32_T";
