@@ -169,6 +169,10 @@ std::string proglang::ParserElement::buildLlvmIr(std::vector<std::string> _data,
     if (data[1].substr(0, 4) == "str.") {
       int l;
       d += extData.storeVariableValue(data[0], _data[1], extData.registerStringConst(data[1].substr(4, data[1].size() - 1), l));
+    } else if (data[1].substr(0, 4) == "any.") {
+      std::string ap;
+      d += extData.obtainVariableAccess(data[1].substr(4, data[1].size() - 1), _data[1], ap);
+      d += extData.storeVariableValue(data[0], _data[1], ap);
     } else {
       d += extData.storeVariableValue(data[0], _data[1], data[1].substr(4, data[1].size() - 1));
     }
@@ -322,8 +326,14 @@ proglang::Parser::Parser(std::vector<Token> tokens) {
     } else if (tokens[i].token_type == proglang::TokenType::IDENTIFIER && tokens[i + 1].token_type == proglang::TokenType::EQUAL && tokens[i + 2].data.has_value() && tokens[i + 3].token_type == proglang::TokenType::SEMICOLON) {
       if (tokens[i + 2].token_type == proglang::TokenType::STRING_LITERAL) {
         current -> appendChild(proglang::ParserElement(current, proglang::ParserElementType::VARIABLE_ASSIGNMENT, { tokens[i].data.value(), "str." + tokens[i + 2].data.value() }));
+      } else if (tokens[i + 2].token_type == proglang::TokenType::IDENTIFIER) {
+        if (tokens[i + 2].data.value().find_first_not_of("0123456789") == std::string::npos) {
+          current -> appendChild(proglang::ParserElement(current, proglang::ParserElementType::VARIABLE_ASSIGNMENT, { tokens[i].data.value(), "int." + tokens[i + 2].data.value() }));
+        } else {
+          current -> appendChild(proglang::ParserElement(current, proglang::ParserElementType::VARIABLE_ASSIGNMENT, { tokens[i].data.value(), "any." + tokens[i + 2].data.value() }));
+        }
       } else {
-        current -> appendChild(proglang::ParserElement(current, proglang::ParserElementType::VARIABLE_ASSIGNMENT, { tokens[i].data.value(), "any." + tokens[i + 2].data.value() }));
+        ERROR(tokens[i + 2].toString() << " can't be assigned to a variable in line " << tokens[i + 1].line << "." << std::endl);
       }
       i += 3;
     } else if (tokens[i].token_type == proglang::TokenType::IDENTIFIER && tokens[i + 1].token_type == proglang::TokenType::EQUAL && tokens[i + 2].token_type == proglang::TokenType::IDENTIFIER && tokens[i + 3].token_type == proglang::TokenType::SQUARE_BRACKET_OPEN && tokens[i + 4].token_type == proglang::TokenType::IDENTIFIER && tokens[i + 5].token_type == proglang::TokenType::SQUARE_BRACKET_CLOSE && tokens[i + 6].token_type == proglang::TokenType::SEMICOLON) {
