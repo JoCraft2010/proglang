@@ -127,6 +127,20 @@ namespace proglang {
       }
       return "%.v." + name;
     }
+    std::string obtainVariableDataAccess(std::string data, std::string from, std::string& accessPoint) {
+      std::string d;
+      if (data.substr(0, 4) == "str.") {
+        int l;
+        accessPoint = registerStringConst(data.substr(4, data.size() - 1), l);
+      } else if (data.substr(0, 4) == "any.") {
+        std::string ap;
+        d += obtainVariableAccess(data.substr(4, data.size() - 1), from, ap);
+        accessPoint = ap;
+      } else {
+        accessPoint = data.substr(4, data.size() - 1);
+      }
+      return d;
+    }
     std::string compare(std::string name0, std::string name1, std::string from, std::string op) {
       std::string d, ap0, ap1;
       d += obtainVariableAccess(name0, from, ap0);
