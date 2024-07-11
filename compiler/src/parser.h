@@ -133,9 +133,13 @@ namespace proglang {
         int l;
         accessPoint = registerStringConst(data.substr(4, data.size() - 1), l);
       } else if (data.substr(0, 4) == "any.") {
-        std::string ap;
-        d += obtainVariableAccess(data.substr(4, data.size() - 1), from, ap);
-        accessPoint = ap;
+        if (data.substr(4, data.size() - 1) == "true" || data.substr(4, data.size() - 1) == "false") {
+          accessPoint = data.substr(4, data.size() - 1);
+        } else {
+          std::string ap;
+          d += obtainVariableAccess(data.substr(4, data.size() - 1), from, ap);
+          accessPoint = ap;
+        }
       } else {
         accessPoint = data.substr(4, data.size() - 1);
       }
