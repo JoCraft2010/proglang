@@ -38,8 +38,8 @@ sudo apt install git
 ### Cloning the git repository
 This step requires git. If you chose to not use git, use another way to obtain the project files.
 ```sh
-git clone --depth 1 https://github.com/JoCraft2010/proglang.git
-cd proglang-master
+git clone --depth 1 https://github.com/JoCraft2010/ProgLang.git
+cd ProgLang
 ```
 
 ### Compiling
