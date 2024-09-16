@@ -1,4 +1,8 @@
 # ProgLang
+
+> [!WARNING]
+> This project was discontinued in favor of [ProgLang2](https://github.com/JoCraft2010/ProgLang2)
+
 ProgLang is a simple proof-of-concept programming language. It is currently under development and may not have a lot of features.
 
 ## Installation
